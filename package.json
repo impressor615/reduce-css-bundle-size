@@ -1,8 +1,9 @@
 {
   "name": "reduce-css-bundle-size",
   "version": "1.0.0",
-  "description": "",
-  "author": "",
+  "description": "About how to handle and structure bundled css files",
+  "repository": "git@github.com:impressor615/reduce-css-bundle-size.git",
+  "author": "seonghyeon",
   "license": "ISC",
   "scripts": {
     "dev": "webpack-dev-server --open",
