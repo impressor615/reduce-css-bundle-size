@@ -46,8 +46,25 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        use: 'babel-loader',
+        loader: 'babel-loader',
         exclude: /node_modules/,
+        options: {
+          babelrc: false,
+          extends: path.resolve(__dirname, '.babelrc'),
+          plugins: [
+            [
+              'react-css-modules',
+              {
+                filetypes: {
+                  '.less': {
+                    syntax: 'postcss-less'
+                  }
+                },
+                generateScopedName,
+              }
+            ],
+          ]
+        },
       },
       {
         test: /\.less$/,
