@@ -68,7 +68,14 @@ module.exports = {
         },
       },
       {
-        test: /\.less$/,
+        test: /(global\.less)/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: ['css-loader', 'less-loader'],
+        })
+      },
+      {
+        test: /^((?!global).)*\.less/,
         use: ExtractTextPlugin.extract({
           fallback: "style-loader",
           use: [
