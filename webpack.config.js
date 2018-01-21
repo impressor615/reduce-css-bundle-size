@@ -2,6 +2,7 @@ const path = require('path');
 const incstr = require('incstr');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const createUniqueIdGenerator = () => {
   const index = {};
@@ -68,27 +69,28 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              camelCase: true,
-              importLoaders: 1,
-              minimize: true,
-              getLocalIdent: (context, localIdentName, localName) => {
-                return generateScopedName(localName, context.resourcePath);
-              },
-            }
-          },
-          'less-loader',
-        ],
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                importLoaders: 1,
+                getLocalIdent: (context, localIdentName, localName) => {
+                  return generateScopedName(localName, context.resourcePath);
+                },
+              }
+            },
+            'less-loader',
+          ],
+        })
       },
     ],
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
+    new ExtractTextPlugin("styles.css"),
     new HtmlWebpackPlugin({
       template: './index.html',
     }),
